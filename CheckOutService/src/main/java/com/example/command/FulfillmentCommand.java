@@ -6,13 +6,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import com.example.CheckoutController;
 import com.example.data.Order;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 
 public class FulfillmentCommand extends HystrixCommand<Order> {
-	
+	private final static Logger LOGGER = Logger.getLogger(FulfillmentCommand.class.getName());
+	private final static String CLASSNAME="FulfillmentCommand";
 	private  Order order=null;
 	private String URL_PATH="http://fulfillmentservice.au-syd.mybluemix.net/order/fulfill";
 	public FulfillmentCommand(Order order){
@@ -22,13 +26,17 @@ public class FulfillmentCommand extends HystrixCommand<Order> {
 
 	@Override
 	protected Order run() throws Exception {
+		String methodName="run";
 		// TODO Auto-generated method stub
+		LOGGER.entering(CLASSNAME, methodName);
 		invokeFullfillmentService();
+		LOGGER.exiting(CLASSNAME, methodName);
 		return order;
 	}
 	
 	public  void invokeFullfillmentService() {
-
+		String methodName="invokeFullfillmentService";
+		LOGGER.entering(CLASSNAME, methodName);
 		  try {
 
 			URL url = new URL("URL_PATH");
@@ -43,7 +51,7 @@ public class FulfillmentCommand extends HystrixCommand<Order> {
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 				(conn.getInputStream())));
-
+			LOGGER.logp(Level.INFO, CLASSNAME, methodName, "After getting response from fulfillemnt service");
 			String output;
 			System.out.println("Output from Server .... \n");
 			while ((output = br.readLine()) != null) {
@@ -61,7 +69,8 @@ public class FulfillmentCommand extends HystrixCommand<Order> {
 			e.printStackTrace();
 
 		  }
-
+		  LOGGER.exiting(CLASSNAME, methodName);
 		}
+	
 
 }
