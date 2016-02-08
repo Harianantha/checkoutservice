@@ -38,4 +38,18 @@ public class CheckoutController {
     	//return "DELIVERED";
         
     }
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    public String placeOrderTest(@PathVariable("id") long id) {
+    	String methodName="placeOrderTest";
+    	LOGGER.entering(CLASSNAME, methodName);
+    	Order order=new Order();
+    	FulfillmentCommand command=new FulfillmentCommand(order);
+    	Order returnVal=(Order)command.execute();
+    	
+    	LOGGER.exiting(CLASSNAME, methodName);
+    	
+    	return "Order Placed Successfully"+System.currentTimeMillis();
+    	//return "DELIVERED";
+        
+    }
 }
