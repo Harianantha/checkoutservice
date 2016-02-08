@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.command.FulfillmentCommand;
+import com.example.data.Order;
+
 
 @RestController
 @RequestMapping("/order/checkout")
@@ -25,7 +28,9 @@ public class CheckoutController {
     public void placeOrder() {
     	String methodName="placeOrder";
     	LOGGER.entering(CLASSNAME, methodName);
-    	
+    	Order order=new Order();
+    	FulfillmentCommand command=new FulfillmentCommand(order);
+    	Order returnVal=(Order)command.execute();
     	
     	LOGGER.exiting(CLASSNAME, methodName);
     	
