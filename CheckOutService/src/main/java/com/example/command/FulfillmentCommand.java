@@ -39,7 +39,7 @@ public class FulfillmentCommand extends HystrixCommand<Order> {
 		LOGGER.entering(CLASSNAME, methodName);
 		  try {
 
-			URL url = new URL("URL_PATH");
+			URL url = new URL(URL_PATH);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Accept", "application/json");
