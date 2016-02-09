@@ -18,8 +18,8 @@ public class CheckoutController {
 	 private final static String CLASSNAME="CheckoutController";
    
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public String getStatus(@PathVariable("id") long id) {
+    @RequestMapping(method = RequestMethod.GET)
+    public String getStatus() {
     	
     	return "DELIVERED";
         
