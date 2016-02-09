@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.springframework</groupId>
-    <artifactId>CheckOutService</artifactId>
+    <artifactId>CheckoutService</artifactId>
     <version>0.1.0</version>
-
+	<packaging>war</packaging>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -18,13 +18,24 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+    		<groupId>com.netflix.hystrix</groupId>
+    		<artifactId>hystrix-core</artifactId>
+    		<version>1.4.23</version>
+		</dependency>
     </dependencies>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>1.6</java.version>
     </properties>
 
 
+   
     <build>
         <plugins>
             <plugin>

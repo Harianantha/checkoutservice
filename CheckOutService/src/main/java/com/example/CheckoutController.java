@@ -39,7 +39,7 @@ public class CheckoutController {
         
     }
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public String placeOrderTest(@PathVariable("id") long id,@PathVariable("memberidid") long memberid) {
+    public String placeOrderTest(@PathVariable("id") long id) {
     	String methodName="placeOrderTest";
     	LOGGER.entering(CLASSNAME, methodName);
     	Order order=new Order();
