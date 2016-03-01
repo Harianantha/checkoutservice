@@ -7,6 +7,14 @@ public class Order implements Serializable {
 	private String orderId;
 	private String address;
 	private float orderValue;
+	private String status;
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public String getOrderId() {
 		return orderId;
 	}
