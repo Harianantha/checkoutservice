@@ -44,13 +44,13 @@ public class FulfillmentCommand extends HystrixCommand<Order> {
 			URL url = new URL(URL_PATH);
 			long startTime=System.currentTimeMillis();
 			//HttpHost proxy = new HttpHost("proxy.cognizant.com");
-			Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.cognizant.com", 6050));
+			//Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.cognizant.com", 6050));
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "application/json");
-			conn.addRequestProperty("http.proxyHost", "proxy.cognizant.com");
+			/*conn.addRequestProperty("http.proxyHost", "proxy.cognizant.com");
 			conn.addRequestProperty("http.proxyPort", "6050");
-			conn.addRequestProperty("java.net.useSystemProxies", "true");
+			conn.addRequestProperty("java.net.useSystemProxies", "true");*/
 			if (conn.getResponseCode() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ conn.getResponseCode());
