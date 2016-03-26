@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.command.FulfillmentCommand;
 import com.example.data.Order;
+import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandProperties;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -61,11 +60,12 @@ public class CheckoutController {
     	LOGGER.entering(CLASSNAME, methodName);
     	Order order=new Order();
     	order.setOrderId(Long.toString(id));
-    	FulfillmentCommand command=new FulfillmentCommand(order);
+    	HystrixCommand<Order> command=new FulfillmentCommand(order);
     	HystrixCommandProperties.Setter().withExecutionTimeoutInMilliseconds(10000);
     	//Order returnVal=(Order)command.
-    	Future<Order> future=command.queue();
-    	Order returnVal=null;
+    	//Future<Order> future=command.queue();
+    	Order returnVal=command.execute();
+    	/*Order returnVal=null;
 		try {
 			returnVal = future.get();
 		} catch (InterruptedException e)  {
@@ -73,7 +73,7 @@ public class CheckoutController {
 			e.printStackTrace();
 		}catch(ExecutionException e){
 			e.printStackTrace();
-		}
+		}*/
     	LOGGER.exiting(CLASSNAME, methodName);
     	
     	if(returnVal!=null)
