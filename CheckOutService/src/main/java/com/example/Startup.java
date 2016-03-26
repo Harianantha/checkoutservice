@@ -1,9 +1,15 @@
 package com.example;
 
-import org.springframework.boot.SpringApplication;
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.embedded.ServletRegistrationBean;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+//import com.netflix.hystrix.dashbaord.stream.MockStreamServlet;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.ApiInfo;
@@ -13,13 +19,22 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
+@EnableHystrix
 @ComponentScan("com.example")
-public class Startup {
+@EnableHystrixDashboard
+public class Startup extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		SpringApplication.run(Startup.class, args);
+		//SpringApplication.run(Startup.class, args);
+		new SpringApplicationBuilder(Startup.class).web(true).run(args);
 	}
+	
+	@Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Startup.class).web(true);
+    }
+	
 	@Bean
     public Docket newsApi() {
 		Docket dc=new Docket(DocumentationType.SWAGGER_2);
@@ -50,5 +65,10 @@ public class Startup {
                 .version("2.0")
                 .build();
     }
+    @Bean
+    public ServletRegistrationBean mockStreamServlet() {
+        return new ServletRegistrationBean(new MockStreamServlet(), "/mock.stream");
+    }
+
 
 }
